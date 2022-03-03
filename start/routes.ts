@@ -47,3 +47,11 @@ Route.group(() => {
   Route.put('/:id', 'PostsController.update').as('update')
   Route.delete('/:id', 'PostsController.destroy').as('destroy')
 }).prefix('/posts').as('posts')
+
+Route.group(() => {
+  Route.get('/',    'PostsController.index').as('index')
+  Route.get('/:id', 'PostsController.show').as('show')
+  Route.post('/',   'PostsController.store').as('store')
+  Route.put('/:id', 'PostsController.update').as('update')
+  Route.delete('/:id', 'PostsController.destroy').as('destroy')
+}).namespace('App/Controllers/Http/Admin').prefix('admin')
