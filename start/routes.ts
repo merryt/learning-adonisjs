@@ -18,9 +18,46 @@
 |
 */
 
+
 import Route from '@ioc:Adonis/Core/Route'
+
 
 Route.get('/', async (ctx) => {
   ctx.test = "testing"
   return ctx.view.render('welcome')
 })
+
+
+Route.on('/test').redirect('/')
+
+Route.on('/test2').render('welcome')
+
+// Route.get('/blog/', async () =>{
+//   return "all posts"
+// }).as("posts.index")
+
+// Route.get('/blog/:id', async ({params}) =>{
+//   return params.id
+// })
+
+Route.group(() => {
+  Route.get('/', () => {
+    return 'get all posts'
+  }).as('index')
+
+  Route.get('/:id', ({ params }) => {
+    return `get post with id of ${params.id}`
+  }).as('show')
+
+  Route.post('/', () => {
+    return 'create a post'
+  }).as('store')
+
+  Route.put('/:id', ({ params }) => {
+    return `update post with id of ${params.id}`
+  }).as('update')
+
+  Route.delete('/:id', ({ params }) => {
+    return `delete post with id of ${params.id}`
+  }).as('destroy')
+}).prefix('/posts').as('posts')
