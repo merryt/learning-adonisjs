@@ -41,23 +41,9 @@ Route.on('/test2').render('welcome')
 // })
 
 Route.group(() => {
-  Route.get('/', () => {
-    return 'get all posts'
-  }).as('index')
-
-  Route.get('/:id', ({ params }) => {
-    return `get post with id of ${params.id}`
-  }).as('show')
-
-  Route.post('/', () => {
-    return 'create a post'
-  }).as('store')
-
-  Route.put('/:id', ({ params }) => {
-    return `update post with id of ${params.id}`
-  }).as('update')
-
-  Route.delete('/:id', ({ params }) => {
-    return `delete post with id of ${params.id}`
-  }).as('destroy')
+  Route.get('/',    'PostsController.index').as('index')
+  Route.get('/:id', 'PostsController.show').as('show')
+  Route.post('/',   'PostsController.store').as('store')
+  Route.put('/:id', 'PostsController.update').as('update')
+  Route.delete('/:id', 'PostsController.destroy').as('destroy')
 }).prefix('/posts').as('posts')
