@@ -40,18 +40,13 @@ Route.on('/test2').render('welcome')
 //   return params.id
 // })
 
-Route.group(() => {
-  Route.get('/',    'PostsController.index').as('index')
-  Route.get('/:id', 'PostsController.show').as('show')
-  Route.post('/',   'PostsController.store').as('store')
-  Route.put('/:id', 'PostsController.update').as('update')
-  Route.delete('/:id', 'PostsController.destroy').as('destroy')
-}).prefix('/posts').as('posts')
 
-Route.group(() => {
-  Route.get('/',    'PostsController.index').as('index')
-  Route.get('/:id', 'PostsController.show').as('show')
-  Route.post('/',   'PostsController.store').as('store')
-  Route.put('/:id', 'PostsController.update').as('update')
-  Route.delete('/:id', 'PostsController.destroy').as('destroy')
-}).namespace('App/Controllers/Http/Admin').prefix('admin')
+// regular posts
+Route.group(()=>{
+  Route.resource("posts", "PostController").except(['create', 'update', 'edit', "destroy", "store"])
+}).as('app')
+
+
+Route.group(()=>{
+  Route.resource("admin/posts", "admin/PostController").only(['create', 'update', 'edit', "destroy", "store"])
+}).namespace('App/Controllers/Http/Admin').as('admin')
