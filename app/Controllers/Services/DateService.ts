@@ -1,13 +1,15 @@
 import { DateTime } from 'luxon'
 
-export default class DateService{
+class DateService{
     public defaultFormat = 'yyyy-mm-dd'
+    public count = 0;
     constructor(defaultFormat: string | null = null){
         this.defaultFormat = defaultFormat ?? this.defaultFormat
+        console.log("test")
     }
     
 
-    public static toDateTime(date: DateTime | null = null, time: DateTime | null= null){
+    public toDateTime(date: DateTime | null = null, time: DateTime | null= null){
         let dateTime = DateTime.now();
 
         if(date){
@@ -16,6 +18,8 @@ export default class DateService{
         if(time){
             dateTime = dateTime.set({hour: time.hour, minute: time.minute})
         }
+        console.log(this.count)
+        this.count = this.count +1;
         return dateTime
     }
 
@@ -23,3 +27,5 @@ export default class DateService{
         return dateTime.toFormat(format)
     }
 }
+
+export default new DateService()

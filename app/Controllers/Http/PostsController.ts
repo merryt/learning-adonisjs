@@ -8,11 +8,6 @@ import { inject } from '@adonisjs/fold';
 @inject()
 export default class PostsController {
 
-  constructor(public dateService: DateService){
-    // this can be useful because we can provide services to our service
-    this.dateService = new DateService("MM/dd/yyyy")
-  }
-
   public async index({}: HttpContextContract) {
     return 'get all posts'
   }
@@ -22,7 +17,7 @@ export default class PostsController {
   public async store({}: HttpContextContract) {
       const dateTime = DateService.toDateTime() 
 
-      const formattedDate = this.dateService.toDate(dateTime)
+      const formattedDate = DateService.toDate(dateTime)
 
       return `create a post on: ${formattedDate}`
   }
