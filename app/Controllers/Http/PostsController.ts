@@ -1,13 +1,17 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import DateService from '../Services/DateService'
+import { inject } from '@adonisjs/fold';
 
 
 // this file was created with `node ace make:controller Post --resource`
 
-
+@inject()
 export default class PostsController {
 
-  public dateService = new DateService()
+  constructor(public dateService: DateService){
+    // this can be useful because we can provide services to our service
+    this.dateService = new DateService("MM/dd/yyyy")
+  }
 
   public async index({}: HttpContextContract) {
     return 'get all posts'

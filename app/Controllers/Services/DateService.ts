@@ -1,7 +1,11 @@
 import { DateTime } from 'luxon'
 
 export default class DateService{
-    public defaultFormat = "MM dd yyyy"
+    public defaultFormat = 'yyyy-mm-dd'
+    constructor(defaultFormat: string | null = null){
+        this.defaultFormat = defaultFormat ?? this.defaultFormat
+    }
+    
 
     public static toDateTime(date: DateTime | null = null, time: DateTime | null= null){
         let dateTime = DateTime.now();
