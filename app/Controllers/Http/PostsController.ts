@@ -1,10 +1,14 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import DateService from '../Services/DateService'
 
 
 // this file was created with `node ace make:controller Post --resource`
 
 
 export default class PostsController {
+
+  public dateService = new DateService()
+
   public async index({}: HttpContextContract) {
     return 'get all posts'
   }
@@ -12,7 +16,11 @@ export default class PostsController {
   public async create({}: HttpContextContract) {}
 
   public async store({}: HttpContextContract) {
-      return 'create a post'
+      const dateTime = DateService.toDateTime() 
+
+      const formattedDate = this.dateService.toDate(dateTime)
+
+      return `create a post on: ${formattedDate}`
   }
 
   public async show({params}: HttpContextContract) {

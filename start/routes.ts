@@ -43,10 +43,15 @@ Route.on('/test2').render('welcome')
 
 // regular posts
 Route.group(()=>{
-  Route.resource("posts", "PostController").except(['create', 'update', 'edit', "destroy", "store"])
-}).as('app')
+  Route.resource("posts", "PostsController").except(['update', 'edit', "destroy"]);
+  // a resourceful route that uses shallowResource will use only use the parents ID for index, create, store because 
+  // those are the screens that NEED to have an id. For the others it will use just the name (in this case comments)
+  // so /comment/:id for the single comment, but /posts/:post_id/comments for the index.
+  Route.shallowResource("posts.comments", 'CommentsController');
+}).as('app');
 
 
+// this is a silly way to do this, we could also apply middleware for auth and just not let logged in people use things.
 Route.group(()=>{
-  Route.resource("admin/posts", "admin/PostController").only(['create', 'update', 'edit', "destroy", "store"])
+  Route.resource("admin/posts", "admin/PostsController").only(['create', 'update', 'edit', "destroy", "store"])
 }).namespace('App/Controllers/Http/Admin').as('admin')
